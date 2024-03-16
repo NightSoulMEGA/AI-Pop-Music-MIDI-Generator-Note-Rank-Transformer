@@ -1,0 +1,51 @@
+
+MODEL:
+    n_head: 8           #8
+    n_layer: 12         #12, number of layer
+    dropout: 0.1        #0.1, dropout rate
+    d_inner: 2048       #2048, inner dimension in FF
+    d_embed: None
+    d_model: 512        #512, model dimension
+    dropatt: 0.0        #0.0, attention probability dropout rate
+    query_dim: 16
+    seq_len: 512        #512
+    n_token: 189        #dimension of input token
+    mem_len: 512        #length of the retained previous heads
+    ext_len: 0          #length of the extended context
+    tgt_len: 70         #70, number of tokens to predict
+    eval_tgt_len: 50    #50, number of tokens to predict for evaluation
+    init: 'normal'       #parameter initializer to use.
+    emb_init: 'normal'   #parameter initializer to use.
+    init_range: 0.1      #parameters initialized by U(-init_range, init_range)
+    emb_init_range: 0.01 #parameters initialized by U(-init_range, init_range)
+    init_std: 0.02       #parameters initialized by N(0, init_std)
+    proj_init_std: 0.01  #parameters initialized by N(0, init_std)
+    clamp_len: -1        #use the same pos embeddings after clamp_len
+    div_val: 1          #divident value for adapative input and softmax
+    position_concat: False
+    pre_lnorm: True      #apply LayerNorm to the input instead of the output
+    same_length: True    #use the same attn length for all tokens
+
+
+TRAIN:
+    ROOT: './data'
+    devices: '0,1'
+    gpuID: '1'
+    output_dir: "./experiment"  #save path
+    batch_size: 8       #8
+    lr: 0.0002          #learning rate
+    num_epochs: 300     #300, epoch
+    save_freq: 10
+    seed: 2222
+    optim: 'adam'
+    no_cuda: False
+
+
+INFERENCE:
+    devices: '0,1'
+    gpuID: '1'
+    checkpoint_dir: './result'   #checkpoint path
+    generated_dir: './gen_midi'    #save midi path
+    checkpoint_type: epoch_idx    #best_train, best_val, epoch_idx
+    model_epoch: 300    #which checkpoint to inference
+    no_cuda: False
